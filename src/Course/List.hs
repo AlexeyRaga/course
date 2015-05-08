@@ -275,7 +275,7 @@ produce f a = a :. (produce f (f a))
 --
 -- prop> let types = x :: Int in notReverse (x :. Nil) == x :. Nil
 notReverse :: List a -> List a
-notReverse = id
+notReverse = reverse
 
 ---- End of list exercises
 
