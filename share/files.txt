@@ -1,3 +1,3 @@
-a.txt
-b.txt
-c.txt
+/Users/alexey/src/github/nicta-course/share/a.txt
+/Users/alexey/src/github/nicta-course/share/b.txt
+/Users/alexey/src/github/nicta-course/share/c.txt
