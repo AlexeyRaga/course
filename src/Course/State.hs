@@ -36,7 +36,8 @@ newtype State s a =
 -- (1,0)
 instance Functor (State s) where
   (<$>) :: (a -> b) -> State s a -> State s b
-  f <$> State g = State $ (\(a, s) -> (f a, s)) <$> g
+--  f <$> State g = State $ (\(a, s) -> (f a, s)) <$> g
+  f <$> State g = State $ first f <$> g
 
 -- | Implement the `Apply` instance for `State s`.
 -- >>> runState (pure (+1) <*> pure 0) 0

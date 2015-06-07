@@ -36,7 +36,8 @@ newtype StateT s f a =
 -- [(3,0)]
 instance Functor f => Functor (StateT s f) where
   (<$>) :: (a -> b) -> StateT s f a -> StateT s f b
-  f <$> StateT g = StateT $ (\s -> (\(a, s') -> (f a, s')) <$> g s)
+--  f <$> StateT g = StateT $ (\s -> (\(a, s') -> (f a, s')) <$> g s)
+  f <$> StateT g = StateT $ (first f <$>) . g
 
 -- | Implement the `Apply` instance for @StateT s f@ given a @Bind f@.
 --
@@ -51,8 +52,9 @@ instance Functor f => Functor (StateT s f) where
 -- [(4,[0,1,2]),(5,[0,1,2])]
 instance Bind f => Apply (StateT s f) where
   (<*>) :: StateT s f (a -> b) -> StateT s f a -> StateT s f b
-  (<*>) =
-    error "todo: Course.StateT (<*>)#instance (StateT s f)"
+  StateT f <*> StateT g = StateT $ (\(f', s') -> first f' <$> g s') <=< f
+  --StateT f <*> StateT g = StateT $ ((\(f', s') -> first f' <$> g s') =<<) . f
+  --StateT f <*> StateT g = StateT $ \s -> (\(f', s') -> first f' <$> g s') =<< f s
 
 -- | Implement the `Applicative` instance for @StateT s f@ given a @Applicative f@.
 --
